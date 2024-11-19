@@ -55,9 +55,8 @@ using namespace std;
 // Constructor: set parameters for viewing, initialize camera, and
 // establish link to Model
 //
-View::View(Model *model):
-  camera(NULL), themodel(model),
-  width(WIDTH), height(HEIGHT),
+View::View():
+  camera(NULL), width(WIDTH), height(HEIGHT),
   near_plane(NEAR), far_plane(FAR), fov(FOV_START),
   modelsize(MODELSIZE), modeldepth(MODELDEPTH),
   diffuse_fraction(DIFFUSE_FRACTION), specular_fraction(SPECULAR_FRACTION), shininess(SHININESS),
@@ -70,7 +69,7 @@ View::View(Model *model):
                       near_plane, far_plane, fov);
 
   // point to the model
-  themodel = model;
+  //themodel = model;
 
   // initialize current window dimensions to match default
   Width = width;
@@ -187,24 +186,24 @@ void View::toggleBackColor(){
 
 // draw the teapot, and also the bubble if a bubble is rising
 void View::drawModel(){
-  // position of end of spout. Note: these magic numbers were determined experimentally
-  Vector3d BubbleOrigin(49 * modelsize / 32, modelsize / 2, 0);
+//   // position of end of spout. Note: these magic numbers were determined experimentally
+//   Vector3d BubbleOrigin(49 * modelsize / 32, modelsize / 2, 0);
   
-  // Draw the teapot
-  glutSolidTeapot(modelsize);
+//   // Draw the teapot
+//   glutSolidTeapot(modelsize);
   
-  // nothing to do if bubble not rising
-  if(themodel->isRising()){
-    // at its starting position, the bubble is in the teapot spout
-    glTranslatef(BubbleOrigin.x, BubbleOrigin.y, BubbleOrigin.z);
+//   // nothing to do if bubble not rising
+//   if(themodel->isRising()){
+//     // at its starting position, the bubble is in the teapot spout
+//     glTranslatef(BubbleOrigin.x, BubbleOrigin.y, BubbleOrigin.z);
     
-    // use the bubble's current position to position it relative to spout
-    Vector3d bubble = themodel->bubblePosition();
-    glTranslatef(bubble.x, bubble.y, bubble.z);
+//     // use the bubble's current position to position it relative to spout
+//     Vector3d bubble = themodel->bubblePosition();
+//     glTranslatef(bubble.x, bubble.y, bubble.z);
     
-    // draw the bubble
-    glutSolidSphere(modelsize / 10, 36, 13);
-  }
+//     // draw the bubble
+//     glutSolidSphere(modelsize / 10, 36, 13);
+//  }
 }
 
 //

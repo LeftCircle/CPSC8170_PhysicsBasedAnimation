@@ -1,6 +1,4 @@
 /*
- View.cpp
- 
  CPSC 8170 Physically Based Animation
  Donald H. House     8/23/2018
  
@@ -45,7 +43,7 @@ class View{
     Camera *camera;
   
     // The simulation model
-    Model *themodel;
+    //Model *themodel;
 
     // Switches to turn lights on and off
     bool KeyOn;
@@ -66,7 +64,7 @@ class View{
     void drawModel();
   
   public:
-    View(Model *model = NULL);
+    View();
   
     // initialize the state of the viewer to start-up defaults
     void setInitialView();
