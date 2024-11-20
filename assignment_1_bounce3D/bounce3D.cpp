@@ -111,17 +111,16 @@ int main(int argc, char* argv[]){
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.66, 0.66, 0.66, 1.0);
 
+	glutIdleFunc(draw_func);
 	glutDisplayFunc(draw_func);
-	glutReshapeFunc(doReshape);
+	glutReshapeFunc(doReshape); // The camera is also set here
 	glutKeyboardFunc(handleKey);
 	glutMotionFunc(handleMotion);
 	glutMouseFunc(handleButtons);
 	glShadeModel(GL_SMOOTH);
 
-	glutIdleFunc(NULL);
 	
 	view.setInitialView();
-
 
 	glutMainLoop();
 

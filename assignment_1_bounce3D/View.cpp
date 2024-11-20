@@ -240,11 +240,14 @@ void View::reshapeWindow(int w, int h){
   Height = h;
 
   // correct Width or Height so that Width / Height will match camera's aspect ratio
-  if(newaspect > camaspect)
+  if(newaspect > camaspect){
     Width = int(h * camaspect);
-  else
+	std::cout << "Width: " << Width << std::endl;
+  }
+  else{
     Height = int(w / camaspect);
-
+	std::cout << "Height: " << Height << std::endl;
+  }
   // offset viewport to keep it centered in the window
   x0 = (w - Width) / 2;
   y0 = (h - Height) / 2;
@@ -273,9 +276,9 @@ void RenderElementBufferSystem::update(){
 			const Vector3d& vertex = elementBuffer.vertices[index];
 			const Vector3d& color = elementBuffer.colors[index];
 			float color_array[3] = {color.x, color.y, color.z};
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, color_array);
 			glNormal3f(normal.x, normal.y, normal.z);
 			glVertex3f(vertex.x, vertex.y, vertex.z);
-			glColor3fv(color_array);
 		}
 		glEnd();
 	}
