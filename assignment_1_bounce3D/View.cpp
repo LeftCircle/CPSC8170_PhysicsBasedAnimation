@@ -258,29 +258,29 @@ void View::reshapeWindow(int w, int h){
 
 void RenderElementBufferSystem::update(){
 	// draw all of the element buffers
-	// for (const Entity& entity : mEntities){
-	// 	// get the element buffer component
-	// 	const ElementBuffer& elementBuffer = 
-	// 							gCoordinator.GetComponent<ElementBuffer>(entity);
+	for (const Entity& entity : mEntities){
+		// get the element buffer component
+		const ElementBuffer& elementBuffer = 
+								gCoordinator.GetComponent<ElementBuffer>(entity);
 
-	// 	// draw the element buffer
-	// 	// TO DO -> Actually initialize the element buffer instead of passing
-	// 	// new data to the gpu every frame
-	// 	glBegin(GL_TRIANGLES);
-	// 	for(int i = 0; i < elementBuffer.indices.size(); i++){
-	// 		int index = elementBuffer.indices[i];
-	// 		const Vector3d& normal = elementBuffer.normals[index];
-	// 		const Vector3d& vertex = elementBuffer.vertices[index];
-	// 		const Vector3d& color = elementBuffer.colors[index];
-	// 		float color_array[3] = {color.x, color.y, color.z};
-	// 		glNormal3f(normal.x, normal.y, normal.z);
-	// 		glVertex3f(vertex.x, vertex.y, vertex.z);
-	// 		glColor3fv(color_array);
-	// 	}
-	// 	glEnd();
-	// }
+		// draw the element buffer
+		// TO DO -> Actually initialize the element buffer instead of passing
+		// new data to the gpu every frame
+		glBegin(GL_TRIANGLES);
+		for(int i = 0; i < elementBuffer.indices.size(); i++){
+			int index = elementBuffer.indices[i];
+			const Vector3d& normal = elementBuffer.normals[index];
+			const Vector3d& vertex = elementBuffer.vertices[index];
+			const Vector3d& color = elementBuffer.colors[index];
+			float color_array[3] = {color.x, color.y, color.z};
+			glNormal3f(normal.x, normal.y, normal.z);
+			glVertex3f(vertex.x, vertex.y, vertex.z);
+			glColor3fv(color_array);
+		}
+		glEnd();
+	}
 	// Create a square with the normal in the z direction
-	glutSolidSphere(10, 20, 20);
+	//glutSolidSphere(10, 20, 20);
 }
 
 void RenderElementBufferSystem::set_signature(){

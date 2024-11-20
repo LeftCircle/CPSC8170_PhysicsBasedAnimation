@@ -117,9 +117,8 @@ int main(int argc, char* argv[]){
 	glutMotionFunc(handleMotion);
 	glutMouseFunc(handleButtons);
 	glShadeModel(GL_SMOOTH);
-	//glEnable(GL_NORMALIZE);
 
-	glutIdleFunc(draw_func);
+	glutIdleFunc(NULL);
 	
 	view.setInitialView();
 
