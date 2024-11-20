@@ -95,8 +95,8 @@ class View{
 
 class RenderElementBufferSystem : public System{
 public:
-  void update() override;
-  void set_signature() override;
+	void update() override;
+	void set_signature() override;
 };
 
 #endif

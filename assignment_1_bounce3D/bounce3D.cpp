@@ -33,7 +33,7 @@ void draw_func(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	
-	gCoordinator.udpate_system<RenderElementBufferSystem>();
+	gCoordinator.update_system<RenderElementBufferSystem>();
 	
 	glutSwapBuffers();
 }
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]){
 	glutCreateWindow("3D Bouncing Ball");
 	
 	glEnable(GL_DEPTH_TEST);
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClearColor(0.66, 0.66, 0.66, 1.0);
 
 	glutReshapeFunc(NULL);
 	glutDisplayFunc(draw_func);

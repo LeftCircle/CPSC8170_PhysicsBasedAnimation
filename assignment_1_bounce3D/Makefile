@@ -32,13 +32,11 @@ copy_dlls:
 	)
 
 HFILES = Vector.${H} Utility.${H} Camera.h \
-		Model.h Matrix.h \
+		Model.h Matrix.h View.h\
 		System.h IcomponentArray.h EntityManager.h ECSUtility.h \
 		ECSCoordinator.h ComponentManager.h 
 OFILES = Vector.o Utility.o Camera.o \
-		Model.o Matrix.o \
-		System.o IcomponentArray.o EntityManager.o \
-		ECSCoordinator.o ComponentManager.o
+		Model.o Matrix.o View.o
 PROJECT = bounce3D
 
 ${PROJECT}.exe:	${PROJECT}.o ${OFILES} copy_dlls
@@ -64,27 +62,31 @@ Model.o: Model.${C} Model.${H} Vector.${H} Utility.${H} \
 Matrix.o: Matrix.${C} Matrix.${H} Vector.${H}
 	${CC} ${CFLAGS} -c Matrix.${C}
 
-System.o: System.${C} System.${H} ECSUtility.h
-	${CC} ${CFLAGS} -c System.${C}
+View.o: View.${C} View.${H} Matrix.${H} Vector.${H} \
+	ECSCoordinator.h
+	${CC} ${CFLAGS} -c View.${C}
 
-IcomponentArray.o: IcomponentArray.${C} IcomponentArray.${H} \
-	ECSUtility.h
-	${CC} ${CFLAGS} -c IcomponentArray.${C}
+# System.o: System.${C} System.${H} ECSUtility.h
+# 	${CC} ${CFLAGS} -c System.${C}
 
-EntityManager.o: EntityManager.${C} EntityManager.${H} \
-	ECSUtility.h
-	${CC} ${CFLAGS} -c EntityManager.${C}
+# IcomponentArray.o: IcomponentArray.${C} IcomponentArray.${H} \
+# 	ECSUtility.h
+# 	${CC} ${CFLAGS} -c IcomponentArray.${C}
 
-# ECSUtility.o: ECSUtility.${H}
-# 	${CC} ${CFLAGS} -c ECSUtility.h
+# EntityManager.o: EntityManager.${C} EntityManager.${H} \
+# 	ECSUtility.h
+# 	${CC} ${CFLAGS} -c EntityManager.${C}
 
-ComponentManager.o: ComponentManager.${C} ComponentManager.${H} \
-	IcomponentArray.h ECSUtility.h
-	${CC} ${CFLAGS} -c ComponentManager.${C}
+# # ECSUtility.o: ECSUtility.${H}
+# # 	${CC} ${CFLAGS} -c ECSUtility.h
 
-ECSCoordinator.o: ECSCoordinator.${C} ECSCoordinator.${H} \
-	ComponentManager.h System.h EntityManager.h ECSUtility.h
-	${CC} ${CFLAGS} -c ECSCoordinator.${C}
+# ComponentManager.o: ComponentManager.${C} ComponentManager.${H} \
+# 	IcomponentArray.h ECSUtility.h
+# 	${CC} ${CFLAGS} -c ComponentManager.${C}
+
+# ECSCoordinator.o: ECSCoordinator.${C} ECSCoordinator.${H} \
+# 	ComponentManager.h System.h EntityManager.h ECSUtility.h
+# 	${CC} ${CFLAGS} -c ECSCoordinator.${C}
 
 
 
