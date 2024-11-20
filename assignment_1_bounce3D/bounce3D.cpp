@@ -7,8 +7,65 @@
 
 
 ECSCoordinator gCoordinator;
+View view;
 
+//
+// Keyboard callback routine.
+// Send model and view commands based on key presses
+//
+void handleKey(unsigned char key, int x, int y){
+  const int ESC = 27;
+  
+  switch(key){
+    case 'k':           // toggle key light on and off
+      view.toggleKeyLight();
+      break;
+      
+    case 'f':           // toggle fill light on and off
+      view.toggleFillLight();
+      break;
+      
+    case 'r':           // toggle back light on and off
+      view.toggleBackLight();
+      break;
+      
+    case 'g':           // toggle background color from grey to black
+      view.toggleBackColor();
+      break;
 
+    case 'i':			// I -- reinitialize view
+    case 'I':
+      view.setInitialView();
+      break;
+      
+    case 'q':			// Q or Esc -- exit program
+    case 'Q':
+    case ESC:
+      exit(0);
+  }
+  
+  // always refresh the display after a key press
+  glutPostRedisplay();
+}
+
+//
+// let the View handle mouse button events
+// but pass along the state of the shift key also
+//
+void handleButtons(int button, int state, int x, int y) {
+  bool shiftkey = (glutGetModifiers() == GLUT_ACTIVE_SHIFT);
+
+	view.handleButtons(button, state, x, y, shiftkey);
+  glutPostRedisplay();
+}
+
+//
+// let the View handle mouse motion events
+//
+void handleMotion(int x, int y) {
+  view.handleMotion(x, y);
+  glutPostRedisplay();
+}
 
 void _register_components(){
 	gCoordinator.RegisterComponent<ElementBuffer>();
@@ -27,51 +84,45 @@ void _init_gCoordinator(){
 }
 
 //
+// let the View handle reshape events
+//
+void doReshape(int width, int height){
+  view.reshapeWindow(width, height);
+}
+
+//
 // Draws the scene through each Render System\
 //
 void draw_func(){
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-	
-	gCoordinator.update_system<RenderElementBufferSystem>();
-	
-	glutSwapBuffers();
+	view.updateDisplay();
 }
 
-//
-// Keypress handling
-//
-void handleKey(unsigned char key, int x, int y){
-  
-  switch(key){
-    case 'q':		// q - quit
-    case 'Q':
-    case 27:		// esc - quit
-      exit(0);
-      
-    default:		// not a valid key -- just ignore it
-      return;
-  }
-}
 
 int main(int argc, char* argv[]){
 	_init_gCoordinator();
+	
+	build_model();
 	glutInit(&argc, argv);
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(960, 540);
+	glutInitWindowSize(view.getWidth(), view.getHeight());
 	glutCreateWindow("3D Bouncing Ball");
 	
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.66, 0.66, 0.66, 1.0);
 
-	glutReshapeFunc(NULL);
 	glutDisplayFunc(draw_func);
-	glutIdleFunc(draw_func);
+	glutReshapeFunc(doReshape);
 	glutKeyboardFunc(handleKey);
-	glutMouseFunc(NULL);
+	glutMotionFunc(handleMotion);
+	glutMouseFunc(handleButtons);
 	glShadeModel(GL_SMOOTH);
 	//glEnable(GL_NORMALIZE);
+
+	glutIdleFunc(draw_func);
+	
+	view.setInitialView();
+
 
 	glutMainLoop();
 

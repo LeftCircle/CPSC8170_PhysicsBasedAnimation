@@ -62,6 +62,33 @@ ElementBuffer create_box3D(const Vector3d& bottom_bl, const Vector3d& top_fr){
 		top_normal, top_normal, top_normal, top_normal
 	};
 
+
+	_elementBuffer.colors.resize(24);
+	// Back face (0-3)
+	for(int i = 0; i < 4; i++) {
+		_elementBuffer.colors[i] = Vector3d(RED);
+	}
+	// Front face (4-7)
+	for(int i = 4; i < 8; i++) {
+		_elementBuffer.colors[i] = Vector3d(GREEN);
+	}
+	// Left face (8-11)
+	for(int i = 8; i < 12; i++) {
+		_elementBuffer.colors[i] = Vector3d(BLUE);
+	}
+	// Right face (12-15)
+	for(int i = 12; i < 16; i++) {
+		_elementBuffer.colors[i] = Vector3d(YELLOW);
+	}
+	// Bottom face (16-19)
+	for(int i = 16; i < 20; i++) {
+		_elementBuffer.colors[i] = Vector3d(CYAN);
+	}
+	// Top face (20-23)
+	for(int i = 20; i < 24; i++) {
+		_elementBuffer.colors[i] = Vector3d(PURPLE);
+	}
+	
 	_elementBuffer.indices = {
 		// back face
 		0, 1, 2, 0, 2, 3,
@@ -76,5 +103,14 @@ ElementBuffer create_box3D(const Vector3d& bottom_bl, const Vector3d& top_fr){
 		// top face
 		20, 21, 22, 20, 22, 23
 	};
+
 	return _elementBuffer;
+}
+
+void build_model(){
+	// Create a box3D
+	ElementBuffer box = create_box3D(Vector3d(-10, -10, -10),
+									 Vector3d(10, 10, 10));
+	Entity entity = gCoordinator.CreateEntity();
+	gCoordinator.AddComponent(entity, box);
 }
