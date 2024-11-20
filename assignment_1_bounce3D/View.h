@@ -10,6 +10,7 @@
 
 #include "Camera.h"
 #include "Model.h"
+#include "ECSCoordinator.h"
 
 #ifndef __VIEW_H__
 #define __VIEW_H__
@@ -90,6 +91,12 @@ class View{
     // accessors to determine current screen width and height
     int getWidth(){return Width;}
     int getHeight(){return Height;}
+};
+
+class RenderElementBufferSystem : public System{
+public:
+  void update() override;
+  void set_signature() override;
 };
 
 #endif

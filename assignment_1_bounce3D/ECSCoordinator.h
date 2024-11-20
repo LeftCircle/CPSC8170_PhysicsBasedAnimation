@@ -44,10 +44,19 @@ public:
 	template<typename T>
 	void SetSystemSignature(Signature signature);
 
+	void update();
+
+	void set_system_signatures();
+
+	template<typename T>
+	void udpate_system();
+
 private:
 	std::unique_ptr<ComponentManager> mComponentManager;
 	std::unique_ptr<EntityManager> mEntityManager;
 	std::unique_ptr<SystemManager> mSystemManager;
 };
+
+extern ECSCoordinator gCoordinator;
 
 #endif

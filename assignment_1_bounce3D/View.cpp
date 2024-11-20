@@ -272,3 +272,31 @@ void View::reshapeWindow(int w, int h){
   // set up camera projection matrix
   camera->PerspectiveDisplay(Width, Height);
 }
+
+void RenderElementBufferSystem::update(){
+  // draw all of the element buffers
+  for (const Entity& entity : mEntities){
+	// get the element buffer component
+	const ElementBuffer& elementBuffer = 
+							gCoordinator.GetComponent<ElementBuffer>(entity);
+	
+	// draw the element buffer
+	// TO DO -> Actually initialize the element buffer instead of passing
+	// new data to the gpu every frame
+	glBegin(GL_TRIANGLES);
+	for(int i = 0; i < elementBuffer.indices.size(); i++){
+	  int index = elementBuffer.indices[i];
+	  const Vector3d& normal = elementBuffer.normals[index];
+	  glNormal3f(normal.x, normal.y, normal.z);
+	  const Vector3d& vertex = elementBuffer.vertices[index];
+	  glVertex3f(vertex.x, vertex.y, vertex.z);
+	}
+	glEnd();
+  }
+}
+
+void RenderElementBufferSystem::set_signature(){
+  Signature signature;
+  signature.set(gCoordinator.GetComponentType<ElementBuffer>());
+  gCoordinator.SetSystemSignature<RenderElementBufferSystem>(signature);
+}

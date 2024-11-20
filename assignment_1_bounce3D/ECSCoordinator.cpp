@@ -76,3 +76,19 @@ void ECSCoordinator::SetSystemSignature(Signature signature)
 {
 	mSystemManager->SetSignature<T>(signature);
 }
+
+void ECSCoordinator::update()
+{
+	mSystemManager->update();
+}
+
+void ECSCoordinator::set_system_signatures()
+{
+	mSystemManager->set_system_signatures();
+}
+
+template<typename T>
+void ECSCoordinator::udpate_system()
+{
+	mSystemManager->udpate_system<T>();
+}

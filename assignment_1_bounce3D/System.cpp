@@ -56,3 +56,35 @@ void SystemManager::EntitySignatureChanged(Entity entity, Signature entitySignat
 		}
 	}
 }
+
+void SystemManager::update()
+{
+	// Update all systems
+	for (auto const& pair : mSystems)
+	{
+		auto const& system = pair.second;
+		system->update();
+	}
+}
+
+void SystemManager::set_system_signatures()
+{
+	// Set the signatures for all systems
+	for (auto const& pair : mSystems)
+	{
+		auto const& system = pair.second;
+		system->set_signature();
+	}
+}
+
+template<typename T>
+void SystemManager::udpate_system()
+{
+	const char* typeName = typeid(T).name();
+
+	assert(mSystems.find(typeName) != mSystems.end() &&
+	 							"System not registered before use.");
+
+	auto system = std::static_pointer_cast<T>(mSystems[typeName]);
+	system->update();
+}
